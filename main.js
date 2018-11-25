@@ -1,6 +1,6 @@
 
-require('./google.js');
-
+var google = require('./google.js');
+var help = require('./helpers.js');
 
 /******* Primera función, SignUp ********/
 
@@ -50,7 +50,6 @@ Parse.Cloud.define("signUp", function(request, response) {
 Parse.Cloud.define("visionTest", function(request, response) {
 	var url = request.params.url;
 
-	var google = require('./google.js');
 	google.googleVision(url, ["LABEL", "FACE", "TEXT", "DOCUMENT_TEXT"], function(error,resp){
 		if(error == null){
 			response.success(resp);
@@ -59,6 +58,118 @@ Parse.Cloud.define("visionTest", function(request, response) {
 		}
 	});
 });
+
+/*
+	En esta funcion, probamos el uso de otras funciones en otros módulos. Vamos a analizar una imagen con el API de Cloud Vision.
+	Params: url
+*/
+Parse.Cloud.define("uploadSelfie", function(request, response) {
+	var url = request.params.url;
+	var userId = request.params.userId;
+
+	// Primero, vamos a obtener las respuestas del API de google.
+	google.googleVision(url, ["LABEL", "FACE"], function(error,resp){
+		if(error == null){
+			//Con la respuesta del API, tenemos que asegurarnos que exista una cara.
+			if(resp.faces == 1){
+
+				//Ahora tenemos que obtener el usuario.
+		        var query = new Parse.Query(Parse.User);
+		        query.equalTo("objectId", userId);
+		        query.first({
+		            useMasterKey:true,
+		            success: function(user) {
+		                if(user != undefined){
+		                	user.set('selfie',url);
+		                	user.save(null,{useMasterKey:true});
+		                	response.success('Selfie ha sido guardada exitosamente');
+		                }else{
+		                	response.error('¡Ups! No encontramos a ese usuario.');
+		                }
+		            },
+		            error: function(error) {
+		                response.error('¡Ups! No encontramos a ese usuario.');
+		            }
+		        });
+			}else{
+				response.error('¡Ups! La imagen no parece ser una selfie, por favor intenta de nuevo.');
+			}
+		}else{
+			response.error(error);
+		}
+	});
+});
+
+
+/*
+	En esta funcion, probamos el uso de otras funciones en otros módulos. Vamos a analizar una imagen con el API de Cloud Vision.
+	Params: url
+*/
+Parse.Cloud.define("uploadIne", function(request, response) {
+	var url = request.params.url;
+	var userId = request.params.userId;
+
+	// Primero, vamos a obtener las respuestas del API de google.
+	google.googleVision(url, ["LABEL", "FACE", "TEXT", "DOCUMENT_TEXT"], function(error,resp){
+		if(error == null){
+
+			//Con la respuesta del API, tenemos que asegurarnos que exista una cara y que sea un documento
+			if(resp.faces > 0 && resp.labels.indexOf('identity document')>=0){
+
+				//Ahorta tenemos que localizar el CURP para asegurarnos
+
+				var curp = getCurp(resp.textAnnotations);
+				if(curp == null){
+					response.error('¡Ups! La imagen no parece ser una identificación, por favor intenta de nuevo.');
+					return;
+				}
+
+				//Ahora tenemos que obtener el usuario.
+		        var query = new Parse.Query(Parse.User);
+		        query.equalTo("objectId", userId);
+		        query.first({
+		            useMasterKey:true,
+		            success: function(user) {
+		                if(user != undefined){
+		                	user.set('ine',url);
+		                	user.set('curp',curp);
+		                	user.save(null,{useMasterKey:true});
+		                	response.success('Identificación ha sido guardada exitosamente. CURP: ' + curp);
+		                }else{
+		                	response.error('¡Ups! No encontramos a ese usuario.');
+		                }
+		            },
+		            error: function(error) {
+		                response.error('¡Ups! No encontramos a ese usuario.');
+		            }
+		        });
+			}else{
+				response.error('¡Ups! La imagen no parece ser una identificación, por favor intenta de nuevo.');
+			}
+		}else{
+			response.error(error);
+		}
+	});
+});
+
+
+function getCurp(textAnnotations){
+	var curp = null;
+
+	if(textAnnotations != undefined){
+	  	for (var i = 1; i < textAnnotations.length; i++) {
+	  	  	var annotation = textAnnotations[i];
+	  	  	var text = annotation.description;//La palabra o texto obtenido
+	  	  	if(text.length == 18){// Las CURP tienen 18 caracteres
+	  	  	  	console.log(text + ' podria ser CURP');
+	  	  	  	if(help.isValidCurp(text)){//Validar con un REGEX
+	  	  	  	  	curp = text;
+	  	  	  	}
+	  	  	}
+	  	}
+	}
+	return curp;
+}
 
 
 

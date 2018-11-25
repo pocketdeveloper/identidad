@@ -1,6 +1,4 @@
 
-var help = require('./helpers.js');
-
 //LABEL, FACE, TEXT, DOCUMENT_TEXT
 module.exports.googleVision = function(imageUrl, features, callback){
   console.log("Before GOOGLE VISION request.");
@@ -53,24 +51,12 @@ module.exports.googleVision = function(imageUrl, features, callback){
         console.log('FullText: ' + fullText);
       }
 
-      var curp = null;
-      for (var i = 1; i < textAnnotations.length; i++) {
-        var annotation = textAnnotations[i];
-        var text = annotation.description;
-        if(text.length == 18){
-          console.log(text + ' podria ser CURP');
-          if(help.isValidCurp(text)){
-            curp = text;
-          }
-        }
-      }
 
       console.log("Labels: " + labels.toString());
 
       // Respuesta modificada
       var googleResponse = {
         "labels":labels,
-        "curp":curp,
         "fullText":fullText,
         "textAnnotations":textAnnotations
       };
