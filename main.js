@@ -192,7 +192,7 @@ Parse.Cloud.define("compareFaces", function(request, response) {
 					if(error == null){
 						user.set('confidence',resp);
 						user.save(null,{useMasterKey:true});
-						if(resp >= .8){
+						if(resp >= 80){
 							response.success('Si es la misma persona. Credibilidad: ' +resp );
 						}else{
 							response.error('¡Ups! No es la misma persona');
