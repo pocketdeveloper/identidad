@@ -1,0 +1,180 @@
+{
+	"info": {
+		"_postman_id": "52da4544-d591-cd59-f238-840101b90265",
+		"name": "Ibero",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sign Up Identificacion",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Parse-Application-Id",
+						"value": "AVAgW5tklSubgnWinGmPJZ4Nl0pmMeaNQIqChc0t"
+					},
+					{
+						"key": "X-Parse-REST-API-Key",
+						"value": "4SCEfId6mbOvvH59W2jU10XCtcb0TldVnxrWkiSD"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Bruno Ramos\",\n\t\"email\":\"brunoramosberho@me.com\",\n\t\"password\":\"Anonymous:)\"\n}"
+				},
+				"url": "https://parseapi.back4app.com/functions/signUp",
+				"description": "Generated from a curl request: \ncurl -X POST \\\n-H \\\"X-Parse-Application-Id: AVAgW5tklSubgnWinGmPJZ4Nl0pmMeaNQIqChc0t\\\" \\\n-H \\\"X-Parse-REST-API-Key: 4SCEfId6mbOvvH59W2jU10XCtcb0TldVnxrWkiSD\\\" \\\nhttps://parseapi.back4app.com/functions/signUp"
+			},
+			"response": []
+		},
+		{
+			"name": "Cloud Vision Google",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"requests\": [\n      {\n        \"features\": [{\"type\":\"LABEL_DETECTION\"},{\"type\":\"FACE_DETECTION\"},{\"type\":\"TEXT_DETECTION\"},{\"type\":\"DOCUMENT_TEXT_DETECTION\"}],\n        \"image\": {\n          \"source\": {\n            \"imageUri\": \"https://cdn.tn.com.ar/sites/default/files/styles/1366x765/public/2017/10/05/steve-jobs_0.jpg\"\n          }\n        }\n      }\n    ]\n}"
+				},
+				"url": {
+					"raw": "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyBL0QYPScnrjHML8i9Kq5VLXVuqoiM_34o",
+					"protocol": "https",
+					"host": [
+						"vision",
+						"googleapis",
+						"com"
+					],
+					"path": [
+						"v1",
+						"images:annotate"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "AIzaSyBL0QYPScnrjHML8i9Kq5VLXVuqoiM_34o"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VisionTest",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Parse-Application-Id",
+						"value": "AVAgW5tklSubgnWinGmPJZ4Nl0pmMeaNQIqChc0t"
+					},
+					{
+						"key": "X-Parse-REST-API-Key",
+						"value": "4SCEfId6mbOvvH59W2jU10XCtcb0TldVnxrWkiSD"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"url\":\"https://cdn.tn.com.ar/sites/default/files/styles/1366x765/public/2017/10/05/steve-jobs_0.jpg\"\n}"
+				},
+				"url": "https://parseapi.back4app.com/functions/visionTest",
+				"description": "Generated from a curl request: \ncurl -X POST \\\n-H \\\"X-Parse-Application-Id: AVAgW5tklSubgnWinGmPJZ4Nl0pmMeaNQIqChc0t\\\" \\\n-H \\\"X-Parse-REST-API-Key: 4SCEfId6mbOvvH59W2jU10XCtcb0TldVnxrWkiSD\\\" \\\nhttps://parseapi.back4app.com/functions/signUp"
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Selfie",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Parse-Application-Id",
+						"value": "AVAgW5tklSubgnWinGmPJZ4Nl0pmMeaNQIqChc0t"
+					},
+					{
+						"key": "X-Parse-REST-API-Key",
+						"value": "4SCEfId6mbOvvH59W2jU10XCtcb0TldVnxrWkiSD"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"url\":\"https://parsefiles.back4app.com/AVAgW5tklSubgnWinGmPJZ4Nl0pmMeaNQIqChc0t/f8599f1ae83be3f6dac915fc31d161dc_bruno.jpg\",\n\t\"userId\":\"fFIv1hOfqk\"\n}"
+				},
+				"url": "https://parseapi.back4app.com/functions/uploadSelfie",
+				"description": "Generated from a curl request: \ncurl -X POST \\\n-H \\\"X-Parse-Application-Id: AVAgW5tklSubgnWinGmPJZ4Nl0pmMeaNQIqChc0t\\\" \\\n-H \\\"X-Parse-REST-API-Key: 4SCEfId6mbOvvH59W2jU10XCtcb0TldVnxrWkiSD\\\" \\\nhttps://parseapi.back4app.com/functions/signUp"
+			},
+			"response": []
+		},
+		{
+			"name": "Upload INE",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Parse-Application-Id",
+						"value": "AVAgW5tklSubgnWinGmPJZ4Nl0pmMeaNQIqChc0t"
+					},
+					{
+						"key": "X-Parse-REST-API-Key",
+						"value": "4SCEfId6mbOvvH59W2jU10XCtcb0TldVnxrWkiSD"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"url\":\"https://parsefiles.back4app.com/AVAgW5tklSubgnWinGmPJZ4Nl0pmMeaNQIqChc0t/46d0b21799dbc153cab45bd269d67377_meadeSelfie.jpg\",\n\t\"userId\":\"fFIv1hOfqk\"\n}"
+				},
+				"url": "https://parseapi.back4app.com/functions/uploadIne",
+				"description": "Generated from a curl request: \ncurl -X POST \\\n-H \\\"X-Parse-Application-Id: AVAgW5tklSubgnWinGmPJZ4Nl0pmMeaNQIqChc0t\\\" \\\n-H \\\"X-Parse-REST-API-Key: 4SCEfId6mbOvvH59W2jU10XCtcb0TldVnxrWkiSD\\\" \\\nhttps://parseapi.back4app.com/functions/signUp"
+			},
+			"response": []
+		},
+		{
+			"name": "Compare Faces",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Parse-Application-Id",
+						"value": "AVAgW5tklSubgnWinGmPJZ4Nl0pmMeaNQIqChc0t"
+					},
+					{
+						"key": "X-Parse-REST-API-Key",
+						"value": "4SCEfId6mbOvvH59W2jU10XCtcb0TldVnxrWkiSD"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"url\":\"https://parsefiles.back4app.com/AVAgW5tklSubgnWinGmPJZ4Nl0pmMeaNQIqChc0t/46d0b21799dbc153cab45bd269d67377_meadeSelfie.jpg\",\n\t\"userId\":\"fFIv1hOfqk\"\n}"
+				},
+				"url": "https://parseapi.back4app.com/functions/compareFaces",
+				"description": "Generated from a curl request: \ncurl -X POST \\\n-H \\\"X-Parse-Application-Id: AVAgW5tklSubgnWinGmPJZ4Nl0pmMeaNQIqChc0t\\\" \\\n-H \\\"X-Parse-REST-API-Key: 4SCEfId6mbOvvH59W2jU10XCtcb0TldVnxrWkiSD\\\" \\\nhttps://parseapi.back4app.com/functions/signUp"
+			},
+			"response": []
+		}
+	]
+}
