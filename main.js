@@ -1,6 +1,7 @@
 
 var google = require('./google.js');
 var help = require('./helpers.js');
+var faceplus = require('./faceplus.js');
 
 /******* Primera función, SignUp ********/
 
@@ -171,5 +172,44 @@ function getCurp(textAnnotations){
 	return curp;
 }
 
+
+Parse.Cloud.define("compareFaces", function(request, response) {
+	var userId = request.params.userId;
+
+	//Obtener el usuario.
+    var query = new Parse.Query(Parse.User);
+    query.equalTo("objectId", userId);
+    query.first({
+        useMasterKey:true,
+        success: function(user) {
+            if(user != undefined){
+            	console.log('Selfie: ' +user.get('selfie'));
+            	console.log('Ine: ' +user.get('ine'));
+            	var imageUrl1 = user.get('selfie') || request.params.imageUrl1;
+				var imageUrl2 = user.get('ine') || request.params.imageUrl2;
+
+				faceplus.compareFaces(imageUrl1, imageUrl2, function(error,resp){
+					if(error == null){
+						user.set('confidence',resp);
+						user.save(null,{useMasterKey:true});
+						if(resp >= .8){
+							response.success('Si es la misma persona. Credibilidad: ' +resp );
+						}else{
+							response.error('¡Ups! No es la misma persona');
+						}
+					
+					}else{
+						response.error(error);
+					}
+				});
+            }else{
+            	response.error('¡Ups! No encontramos a ese usuario.');
+            }
+        },
+        error: function(error) {
+            response.error('¡Ups! No encontramos a ese usuario.');
+        }
+    });
+});
 
 
